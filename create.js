@@ -1,4 +1,4 @@
-const density = "B@#W$G98SHP654321?!abc;:+=-,._ ";
+const density = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,^`'. "
 const ctx = document.getElementById("canvas").getContext("2d");
 const upload = document.getElementById("upload");
 const output = document.getElementById("output");
@@ -39,7 +39,7 @@ async function handleVideo(file) {
 }
 
 function generateASCII() {
-  const width = 100;
+  const width = 150;
   const height = (canvas.height / canvas.width) * width;
   ctx.drawImage(canvas, 0, 0, width, height);
   const imageData = ctx.getImageData(0, 0, width, height);
