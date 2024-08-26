@@ -1,17 +1,19 @@
-const density = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\|()1{}[]?-_+~<>i!lI;:,^`'. "
-const ctx = document.getElementById("canvas").getContext("2d");
+const density =
+  "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,^`'. ";
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
 const upload = document.getElementById("upload");
-const output = document.getElementById("output");
-const asciiArt = document.getElementById('ascii-art')
+const asciiArt = document.getElementById("ascii-art");
 
-//process image or video
+// Handle file upload (image or video)
 upload.addEventListener("change", async (event) => {
-  console.log('here')
   const file = event.target.files[0];
-  if (file.type.startsWith("image/")) {
-    handleImage(file);
-  } else if (file.type.startsWith("video/")) {
-    handleVideo(file);
+  if (file) {
+    if (file.type.startsWith("image/")) {
+      handleImage(file);
+    } else if (file.type.startsWith("video/")) {
+      handleVideo(file);
+    }
   }
 });
 
@@ -39,9 +41,8 @@ async function handleVideo(file) {
 }
 
 function generateASCII() {
-  const width = 300;
-  const height = (canvas.height / canvas.width) * width;
-  ctx.drawImage(canvas, 0, 0, width, height);
+  const width = canvas.width;
+  const height = canvas.height;
   const imageData = ctx.getImageData(0, 0, width, height);
   let ascii = "";
 
@@ -57,9 +58,8 @@ function generateASCII() {
     }
     ascii += "\n";
   }
-  const aspectRatio = (canvas.width / canvas.height)
-  const fontSize = Math.floor(width / 100)
+
+  const fontSize = Math.floor(width / 75);
   asciiArt.style.fontSize = `${fontSize}px`;
-  asciiArt.style.lineHeight = `${fontSize * aspectRatio}px`;
   asciiArt.textContent = ascii;
 }
