@@ -39,7 +39,7 @@ async function handleVideo(file) {
 }
 
 function generateASCII() {
-  const width = 150;
+  const width = 300;
   const height = (canvas.height / canvas.width) * width;
   ctx.drawImage(canvas, 0, 0, width, height);
   const imageData = ctx.getImageData(0, 0, width, height);
@@ -57,5 +57,9 @@ function generateASCII() {
     }
     ascii += "\n";
   }
+  const aspectRatio = (canvas.width / canvas.height)
+  const fontSize = Math.floor(width / 100)
+  asciiArt.style.fontSize = `${fontSize}px`;
+  asciiArt.style.lineHeight = `${fontSize * aspectRatio}px`;
   asciiArt.textContent = ascii;
 }
