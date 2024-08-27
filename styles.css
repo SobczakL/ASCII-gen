@@ -1,2 +1,5 @@
-.ascii-art {
+.wrapper {
+    overflow: hidden;
+    max-width: 500px;
+    max-height: 700px;
 }
