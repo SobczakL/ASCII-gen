@@ -1,5 +1,19 @@
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: beige;
+}
+
 .wrapper {
     overflow: hidden;
     max-width: 500px;
     max-height: 700px;
+}
+
+.inputBox{
+    display: flex;
+    align-content: center;
+    background-color: black;
+    padding: 30px;
 }

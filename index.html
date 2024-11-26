@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art Generator</title>
-    <link rel="stylesheet" href="styles.css"></link>
+    <link rel="stylesheet" href="styles.css">
+    </link>
 </head>
+
 <body>
-    <input type="file" id="upload" accept="image/*,video/*">
     <div class="wrapper">
         <pre id="ascii-art" class="ascii-art"></pre>
     </div>
-    <canvas id="canvas" style=""></canvas>
+    <canvas id="canvas" style="display: none;"></canvas>
     <script src="create.js"></script>
+    <div class="inputBox">
+        <input type="file" id="upload" accept="image/*,video/*">
+    </div>
 </body>
+
 </html>
