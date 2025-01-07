@@ -1,14 +1,40 @@
+:root {
+    font-size: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0px;
+}
+
 body {
     width: 100%;
     height: 100%;
-    overflow: hidden;
     background-color: beige;
 }
 
-.wrapper {
+.main-container {
+    max-width: 800px;
+    height: 400px;
+
+}
+
+.parent {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    margin: 0px;
+}
+
+.canvas {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.ascii-art {
+    position: absolute;
+    white-space: pre;
     overflow: hidden;
-    max-width: 500px;
-    max-height: 700px;
+    margin: 0px;
 }
 
 .inputBox{
