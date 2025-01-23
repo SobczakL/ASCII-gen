@@ -4,16 +4,23 @@ const form = document.getElementById("form");
 const upload = document.getElementById("upload");
 const parent = document.getElementById("parent");
 const output = document.getElementById("output");
-let fontSize
+const slider = document.getElementById("fontSize");
+const sliderValue = document.getElementById("sliderValue")
 
-const testChar = "a";
-const fontFamily = "monospace";
+const ASCIIOptions = {
+  fontSize: 16,
+}
+
+const characterTestVals = {
+  character: "a",
+  fontFamily: "monospace"
+}
 
 const measureChar = (fontSize) => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
-  ctx.font = `${fontSize}px ${fontFamily}`;
-  const metrics = ctx.measureText(testChar);
+  ctx.font = `${ASCIIOptions.fontSize}px ${characterTestVals.fontFamily}`;
+  const metrics = ctx.measureText(characterTestVals.character);
   const charWidth = metrics.width;
   const charHeight = fontSize;
   return { charWidth, charHeight };
@@ -21,19 +28,26 @@ const measureChar = (fontSize) => {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const file = upload.files[0];
-  fontSize = document.getElementById("fontSize").value
-  console.log(file, fontSize)
-  if (file) {
-    output.innerHTML = "";
-    const url = URL.createObjectURL(file);
-    if (file.type.startsWith("image/")) {
-      handleImage(url, parent, canvas, output);
-    } else if (file.type.startsWith("video/")) {
-      handleVideo(url, parent, canvas, output);
+  renderASCII(upload.files[0], ASCIIOptions)
+});
+
+slider.addEventListener("input", (event) => {
+  ASCIIOptions.fontSize = event.target.value;
+  sliderValue.innerHTML = `${ASCIIOptions.fontSize}px`
+  renderASCII(upload.files[0], ASCIIOptions)
+})
+
+const renderASCII = (file, ASCIIOptions) => {
+  if(file) {
+    const url = URL.createObjectURL(file)
+    if(file.type.startsWith("image/")) {
+      handleImage(url, parent, canvas, output)
+    }
+    else if (file.type.startsWith("video/")){
+      handleVideo(url, parent, canvas, output)
     }
   }
-});
+}
 
 const generateASCII = (canvas, ctx, output) => {
   // const density =
@@ -74,33 +88,30 @@ const handleImage = (url, parent, canvas, output) => {
     canvas.height = 0;
 
     // Dynamically adjust font size to fit
-    while (fontSize > 1) {
-      const { charWidth, charHeight } = measureChar(fontSize);
-      console.log(charWidth, charHeight);
+    while (ASCIIOptions.fontSize > 1) {
+      const { charWidth, charHeight } = measureChar(ASCIIOptions.fontSize);
       const charsPerRow = Math.floor(containerWidth / charWidth);
       const charsPerColumn = Math.floor(containerHeight / charHeight);
-      console.log(charsPerRow, charsPerColumn);
 
       const fits =
         charsPerRow * charWidth <= containerWidth &&
         charsPerColumn * charHeight <= containerHeight;
 
       if (fits) {
-        output.style.fontSize = `${fontSize}px`;
+        output.style.fontSize = `${ASCIIOptions.fontSize}px`;
         output.style.lineHeight = `${charHeight}px`;
         canvas.width = charsPerRow;
         canvas.height = charsPerColumn;
         break;
       }
-      fontSize--;
+      ASCIIOptions.fontSize--;
     }
 
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
     generateASCII(canvas, ctx, output);
   };
 
-  image.onerror = (error) => {
-    console.error("Error loading image:", error);
+  image.onerror = (error) => { console.error("Error loading image:", error);
     output.textContent = "Error loading image";
   };
 };

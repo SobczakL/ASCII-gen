@@ -6,20 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ascii art generator</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=VT323&display=swap" rel="stylesheet">
     </link>
 </head>
 
 <body>
     <section>
+        <h1 class="main-title">ASCII Generator</h1>
         <div class="main-container">
             <div class="parent" id="parent">
                 <canvas id="canvas" class="canvas"></canvas>
                 <pre id="output" class="ascii-art"></pre>
             </div>
             <form class="inputbox" id="form">
-                <input type="file" id="upload" accept="image/*,video/*">
-                <input type="number" id="fontSize">
-                <button type="submit">Submit</button>
+                <div class="inputbox-inputContainer">
+                    <label>Upload File:</label>
+                    <input type="file" id="upload" class="inputbox-inputContainer__upload" accept="image/*,video/*">
+                </div>
+                <div class="inputbox-inputContainer">
+                    <label>Select Font Size:</label>
+                    <div class="inputbox-inputContainer__rangeContainer">
+                        <p id="sliderValue" class="inputbox-inputContainer__rangeValue">16px</p>
+                        <input type="range" min="2" max="30" value="16" id="fontSize">
+                    </div>
+                </div>
+                <button class="inputbox-button" type="submit">Submit</button>
             </form>
         </div>
     </section>
