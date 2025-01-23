@@ -87,7 +87,6 @@ const handleImage = (url, parent, canvas, output) => {
     canvas.width = 0;
     canvas.height = 0;
 
-    // Dynamically adjust font size to fit
     while (ASCIIOptions.fontSize > 1) {
       const { charWidth, charHeight } = measureChar(ASCIIOptions.fontSize);
       const charsPerRow = Math.floor(containerWidth / charWidth);
@@ -133,13 +132,24 @@ const handleVideo = (url, parent, canvas, output) => {
   video.addEventListener("loadedmetadata", () => {
     const containerWidth = parent.offsetWidth;
     const containerHeight = parent.offsetHeight;
+    while (ASCIIOptions.fontSize > 1) {
+      const { charWidth, charHeight } = measureChar(ASCIIOptions.fontSize);
+      const charsPerRow = Math.floor(containerWidth / charWidth);
+      const charsPerColumn = Math.floor(containerHeight / charHeight);
 
-    const maxCharsWidth = Math.floor(containerWidth / charWidth);
-    const maxCharsHeight = Math.floor(containerHeight / charHeight);
+      const fits =
+        charsPerRow * charWidth <= containerWidth &&
+        charsPerColumn * charHeight <= containerHeight;
 
-    canvas.width = Math.floor(maxCharsWidth * 2);
-    canvas.height = maxCharsHeight * 2;
-
+      if (fits) {
+        output.style.fontSize = `${ASCIIOptions.fontSize}px`;
+        output.style.lineHeight = `${charHeight}px`;
+        canvas.width = charsPerRow;
+        canvas.height = charsPerColumn;
+        break;
+      }
+      ASCIIOptions.fontSize--;
+    }
     video.play();
   });
 
